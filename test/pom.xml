@@ -1,29 +1,89 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>com.clarkparsia</groupId>
-		<artifactId>Empire-parent</artifactId>
-		<version>0.7</version>
-		<relativePath>..</relativePath>
-	</parent>
-	<artifactId>Empire-test</artifactId>
-	<packaging>jar</packaging>
-	<dependencies>
-		<dependency>
-			<groupId>com.clarkparsia</groupId>
-			<artifactId>Empire-jena</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.clarkparsia</groupId>
-			<artifactId>Empire-sesame2</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.10</version>
-		</dependency>
-	</dependencies>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.clarkparsia</groupId>
+    <artifactId>Empire-parent</artifactId>
+    <version>0.7.2</version>
+  </parent>
+
+  <artifactId>Empire-test</artifactId>
+  <packaging>jar</packaging>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.clarkparsia</groupId>
+      <artifactId>Empire-core</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.clarkparsia</groupId>
+      <artifactId>Empire-jena</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.clarkparsia</groupId>
+      <artifactId>Empire-sesame2</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openrdf.sesame</groupId>
+      <artifactId>sesame-rio-turtle</artifactId>
+      <version>${sesame.version}</version>
+    </dependency>
+
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.10</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>apt-maven-plugin</artifactId>
+        <version>1.0-alpha-4</version>
+        <executions>
+          <execution>
+            <phase>generate-test-resources</phase>
+            <goals>
+              <goal>test-process</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <factory>com.clarkparsia.empire.util.apt.EmpireAnnotationProcessorFactory</factory>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>com.clarkparsia</groupId>
+            <artifactId>Empire-core</artifactId>
+            <version>${project.version}</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.12</version>
+        <configuration>
+          <includes>
+            <include>**/EmpireTestSuite.java</include>
+          </includes>
+        </configuration>
+      </plugin>
+    </plugins>
+
+    <resources>
+      <resource>
+        <directory>${pom.build.outputDirectory}/generated-test-resources/apt</directory>
+      </resource>
+    </resources>
+  </build>
+
 </project>

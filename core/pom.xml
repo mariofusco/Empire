@@ -1,16 +1,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
+
+  <parent>
 		<groupId>com.clarkparsia</groupId>
 		<artifactId>Empire-parent</artifactId>
-		<version>0.7</version>
-		<relativePath>..</relativePath>
+		<version>0.7.2</version>
 	</parent>
-	<artifactId>Empire-core</artifactId>
+
+  <artifactId>Empire-core</artifactId>
 	<description>Core logic of Empire-RDF</description>
 	<packaging>jar</packaging>
-	<dependencies>
+
+  <dependencies>
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
@@ -140,40 +142,43 @@
 			<systemPath>${java.home}/../lib/tools.jar</systemPath>
 		</dependency>
 	</dependencies>
-	<build>
-		<plugins>
-				<!-- Here we use maven-shade-plugin to include the cp-common-* jars (as 
-					they aren't classical maven dependencies). The day they'll begin good amven 
-					citizens, this inclusion will no more be necessary -->
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-shade-plugin</artifactId>
-					<executions>
-						<execution>
-							<id>create good maven citizen with those cp-common in</id>
-							<phase>package</phase>
-							<goals>
-								<goal>shade</goal>
-							</goals>
-							<configuration>
-								<artifactSet>
-									<includes>
-										<!-- All cp-common jars will be automatically merged, but not the 
-											other ones -->
-										<include>com.clarkparsia:cp-common-utils</include>
-										<include>com.clarkparsia:cp-common-openrdf</include>
-									</includes>
-								</artifactSet>
-							</configuration>
-						</execution>
-					</executions>
-				</plugin>
-		</plugins>
-	</build>
+
+  <build>
+    <plugins>
+      <!-- Here we use maven-shade-plugin to include the cp-common-* jars (as
+           they aren't classical maven dependencies). The day they'll begin good amven
+           citizens, this inclusion will no more be necessary -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>create good maven citizen with those cp-common in</id>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <artifactSet>
+                <includes>
+                  <!-- All cp-common jars will be automatically merged, but not the
+                          other ones -->
+                  <include>com.clarkparsia:cp-common-utils</include>
+                  <include>com.clarkparsia:cp-common-openrdf</include>
+                </includes>
+              </artifactSet>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
 	<repositories>
 		<repository>
 			<id>libs</id>
 			<url>file://${project.basedir}/lib</url>
 		</repository>
 	</repositories>
+
 </project>

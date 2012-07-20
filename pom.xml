@@ -1,13 +1,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>Empire-parent</artifactId>
+
+  <artifactId>Empire-parent</artifactId>
 	<groupId>com.clarkparsia</groupId>
-	<version>0.7</version>
-	<name>Parent pom for Empire</name>
+	<version>0.7.2</version>
+
+  <name>Empire :: Parent POM</name>
 	<description>Groups common configuration and dependencies for all the empire artifacts</description>
 	<packaging>pom</packaging>
-	<modules>
+
+  <modules>
 		<module>core</module>
 		<module>fourstore</module>
 		<module>jena</module>
@@ -15,16 +18,19 @@
 		<module>sesame2</module>
 		<module>sql</module>
 		<module>test</module>
+    <module>examples</module>
 	</modules>
-	<properties>
+
+  <properties>
 		<!-- used version of Java -->
 		<java.version>1.5</java.version>
 		<!-- used version of slf4j -->
-		<slf4j.version>1.5.8</slf4j.version>
+		<slf4j.version>1.6.4</slf4j.version>
 		<!-- Now I guess you know what it means -->
 		<sesame.version>2.3.1</sesame.version>
 	</properties>
-	<dependencyManagement>
+
+  <dependencyManagement>
 		<dependencies>
 			<dependency>
 				<groupId>com.google.guava</groupId>
@@ -106,13 +112,6 @@
 				<artifactId>log4j</artifactId>
 				<version>1.2.14</version>
 			</dependency>
-			<!-- This dependency is NOT the optimal one. i guess sesame-sail should 
-				be far better -->
-			<dependency>
-				<groupId>org.openrdf.sesame</groupId>
-				<artifactId>sesame-runtime</artifactId>
-				<version>${sesame.version}</version>
-			</dependency>
 			<dependency>
 				<groupId>c3p0</groupId>
 				<artifactId>c3p0</artifactId>
@@ -126,12 +125,14 @@
 		</dependencies>
 	</dependencyManagement>
 	<build>
+		<!--
 		<resources>
 			<resource>
 				<directory>resources</directory>
 			</resource>
 		</resources>
 		<sourceDirectory>src</sourceDirectory>
+		-->
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -174,9 +175,11 @@
 			</plugins>
 		</pluginManagement>
 	</build>
+
 	<repositories>
 		<repository>
 			<id>aduna</id>
+      <name>Aduna Software</name>
 			<url>http://repo.aduna-software.org/maven2/releases/</url>
 			<snapshots>
 				<enabled>false</enabled>
@@ -186,4 +189,5 @@
 			</releases>
 		</repository>
 	</repositories>
+
 </project>

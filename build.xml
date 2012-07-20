@@ -9,7 +9,7 @@
 	<property environment="env"/>
 
 	<property name="project.name" value="empire"/>
-	<property name="project.version" value="0.7.1"/>
+	<property name="project.version" value="0.7.2"/>
 
 	<property name="core.dir" location="core"/>
 	<property name="jena.dir" location="jena"/>
@@ -18,14 +18,19 @@
 	<property name="test.dir" location="test"/>
 	<property name="sql.dir" location="sql"/>
 
-	<property name="core.src.dir" location="${core.dir}/src"/>
-	<property name="jena.src.dir" location="${jena.dir}/src"/>
-	<property name="jena.test.src.dir" location="${jena.dir}/test"/>
-	<property name="fourstore.src.dir" location="${fourstore.dir}/src"/>
-	<property name="sesame.src.dir" location="${sesame.dir}/src"/>
-	<property name="sesame.test.src.dir" location="${sesame.dir}/test"/>
-	<property name="test.src.dir" location="${test.dir}/src"/>
-	<property name="sql.src.dir" location="${sql.dir}/src"/>
+	<property name="core.src.dir" location="${core.dir}/src/main/java"/>
+	<property name="core.resource.dir" location="${core.dir}/src/main/resources"/>
+	<property name="core.test.src.dir" location="${core.dir}/src/main/test"/>
+	<property name="jena.src.dir" location="${jena.dir}/src/main/java"/>
+	<property name="jena.test.src.dir" location="${jena.dir}/src/main/test"/>
+	<property name="fourstore.src.dir" location="${fourstore.dir}/src/main/java"/>
+	<property name="fourstore.test.src.dir" location="${fourstore.dir}/src/main/test"/>
+	<property name="sesame.src.dir" location="${sesame.dir}/src/main/java"/>
+	<property name="sesame.test.src.dir" location="${sesame.dir}/src/main/test"/>
+	<property name="sql.src.dir" location="${sql.dir}/src/main/java"/>
+	<property name="sql.src.test.dir" location="${sql.dir}/src/test/java"/>
+	<property name="test.src.dir" location="${test.dir}/src/test/java"/>
+	<property name="test.resource.dir" location="${test.dir}/src/test/resources"/>
 
 	<property name="core.lib.dir" location="${core.dir}/lib"/>
 	<property name="jena.lib.dir" location="${jena.dir}/lib"/>
@@ -144,8 +149,6 @@
 
 		<apt debug="${javac.debug}" source="1.5" target="1.5" factory="com.clarkparsia.empire.util.apt.EmpireAnnotationProcessorFactory" destdir="${test.build.dir}">
 			<src path="${test.src.dir}"/>
-			<src path="${sesame.test.src.dir}"/>
-			<src path="${jena.test.src.dir}"/>
 			<classpath refid="project.class.path"/>
 		</apt>
 	</target>
@@ -163,12 +166,18 @@
 		<jar jarfile="${dist.src.dir}/${project.name}-test-src.jar" basedir="${test.src.dir}"/>
 
 		<copy todir="${core.build.dir}">
-			<fileset dir="${core.dir}/resources">
+			<fileset dir="${core.resource.dir}">
 				<include name="**/*"/>
 			</fileset>
-			<fileset dir="${core.dir}/src">
+			<fileset dir="${core.src.dir}">
 				<include name="**/*"/>
 				<exclude name="**/*.java"/>
+			</fileset>
+		</copy>
+
+		<copy todir="${test.build.dir}">
+			<fileset dir="${test.resource.dir}">
+				<include name="**/*"/>
 			</fileset>
 		</copy>
 
@@ -282,7 +291,7 @@
 	<target name="dist-core" depends="label-release,build,distfiles,javadoc">
 
 		<copy todir="${core.build.dir}">
-			<fileset dir="${core.dir}/resources">
+			<fileset dir="${core.resource.dir}">
 				<include name="**/*"/>
 			</fileset>
 		</copy>
@@ -343,7 +352,7 @@
 		<mkdir dir="dist/test-reports"/>
   		<junit fork="yes" printsummary="yes" haltonfailure="no">
             <jvmarg value="-Xmx1024m"/>
-			<jvmarg value="-Dtest.data=${test.dir}/data/nasa.nt"/>
+			<jvmarg value="-Dtest.data=${test.resource.dir}/data/nasa.nt"/>
               
             <test name="com.clarkparsia.empire.test.EmpireTestSuite" outfile="dist/test-reports/report"/>
               
