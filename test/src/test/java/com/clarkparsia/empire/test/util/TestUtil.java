@@ -32,7 +32,7 @@ public class TestUtil {
 	public static DataSource createTestSource() throws DataSourceException {
 		Map<String, Object> aMap = new HashMap<String, Object>();
 		aMap.put("factory", "test-source");
-		aMap.put("files", new File("/data/lite.nasa.nt"));
+		aMap.put("files", "/data/lite.nasa.nt");
 
 		return new MutableTestDataSourceFactory().create(aMap);
 	}

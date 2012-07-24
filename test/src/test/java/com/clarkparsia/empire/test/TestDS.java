@@ -74,11 +74,7 @@ public class TestDS {
 		Map<String, Object> aMap = new HashMap<String, Object>();
 		aMap.put("factory", "sesame");
 
-        try {
-            aMap.put("files", new File(TestDS.class.getResource("/data/lite.nasa.nt").toURI()));
-        } catch ( URISyntaxException e ) {
-            fail( e.getMessage() );
-        }
+        aMap.put("files", new File(TestDS.class.getResource("/data/lite.nasa.nt").getPath()));
 
         DataSource aSesameSource = Empire.get().persistenceProvider().createDataSource("test-sesame", aMap);
 
